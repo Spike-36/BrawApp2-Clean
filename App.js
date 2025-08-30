@@ -15,6 +15,14 @@ function TabButton({ label, active, onPress }) {
   );
 }
 
+console.log('Check screens:', {
+  Home,
+  List,
+  Word,
+  Settings,
+});
+
+
 export default function App() {
   const [tab, setTab] = useState('Home');                // 'Home' | 'List' | 'Word' | 'Settings'
   const [indexLang, setIndexLang] = useState('English'); // must match blocks.json keys
