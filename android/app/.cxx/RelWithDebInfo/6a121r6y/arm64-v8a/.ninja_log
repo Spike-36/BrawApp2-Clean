@@ -1,0 +1,27 @@
+# ninja log v5
+0	7	1756522375981786000	/Users/petermilligan/Dev/BrawApp2/android/app/.cxx/RelWithDebInfo/6a121r6y/arm64-v8a/CMakeFiles/cmake.verify_globs	ca180b7d2b9ef168
+6291	6485	1756364648243805821	/Users/petermilligan/Dev/BrawApp2/android/app/build/intermediates/cxx/RelWithDebInfo/6a121r6y/obj/arm64-v8a/libreact_codegen_safeareacontext.so	dd298070ac788650
+6625	6676	1756364648427860184	/Users/petermilligan/Dev/BrawApp2/android/app/build/intermediates/cxx/RelWithDebInfo/6a121r6y/obj/arm64-v8a/libappmodules.so	b6346bd21fbdb567
+4760	6291	1756364648047629674	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/petermilligan/Dev/BrawApp2/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/safeareacontext-generated.cpp.o	bdf17defceb4e4c2
+17	3446	1756364645182804878	rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/States.cpp.o	9f405b41712653e9
+14	3702	1756364645454023121	rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/EventEmitters.cpp.o	203863e7ca455ca1
+17	4387	1756364646110042067	rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/ShadowNodes.cpp.o	b18f3753ff41c1c2
+18	4577	1756364646327465597	rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/rngesturehandler_codegenJSI-generated.cpp.o	95ce1b49628e080c
+3446	5533	1756364647286120775	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/petermilligan/Dev/BrawApp2/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/EventEmitters.cpp.o	8c334611f541a7b9
+19	4759	1756364646483400408	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/petermilligan/Dev/BrawApp2/node_modules/react-native-safe-area-context/common/cpp/react/renderer/components/safeareacontext/RNCSafeAreaViewState.cpp.o	de8b2c5079422347
+19	4723	1756364646473198011	rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/rngesturehandler_codegen-generated.cpp.o	4679ed33a6068a9c
+11	4998	1756364646738253464	CMakeFiles/appmodules.dir/OnLoad.cpp.o	bfa4ec5ea9fb3f59
+19	5815	1756364647563698432	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/petermilligan/Dev/BrawApp2/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/ComponentDescriptors.cpp.o	17977ad2dcdbff82
+17	5945	1756364647692721949	rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/Props.cpp.o	e89e5a01f90e8820
+4388	6208	1756364647962677683	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/petermilligan/Dev/BrawApp2/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/ShadowNodes.cpp.o	e8042441304a1a5c
+4577	5809	1756364647565796695	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/petermilligan/Dev/BrawApp2/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/States.cpp.o	535545ff30f478c6
+12	5876	1756364647621503919	rngesturehandler_codegen_autolinked_build/CMakeFiles/react_codegen_rngesturehandler_codegen.dir/react/renderer/components/rngesturehandler_codegen/ComponentDescriptors.cpp.o	30b2ea8d8bc281b3
+19	5656	1756364647404526434	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/petermilligan/Dev/BrawApp2/node_modules/react-native-safe-area-context/common/cpp/react/renderer/components/safeareacontext/RNCSafeAreaViewShadowNode.cpp.o	8a8fee22c7f419d8
+8	45	1756522376002493555	build.ninja	402cceb8b1b60230
+0	9	0	clean	16945cb44e9643ab
+3702	6287	1756364648038732535	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/petermilligan/Dev/BrawApp2/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/Props.cpp.o	13bfa6276070e70d
+4723	6237	1756364647990621984	safeareacontext_autolinked_build/CMakeFiles/react_codegen_safeareacontext.dir/Users/petermilligan/Dev/BrawApp2/node_modules/react-native-safe-area-context/android/build/generated/source/codegen/jni/react/renderer/components/safeareacontext/safeareacontextJSI-generated.cpp.o	45a1fd43aa885aa3
+8	6625	1756364648348761896	CMakeFiles/appmodules.dir/Users/petermilligan/Dev/BrawApp2/android/app/build/generated/autolinking/src/main/jni/autolinking.cpp.o	9c3cc40649123e18
+7	33	1756522376002493555	build.ninja	402cceb8b1b60230
+0	6	0	/Users/petermilligan/Dev/BrawApp2/android/app/.cxx/RelWithDebInfo/6a121r6y/arm64-v8a/CMakeFiles/cmake.verify_globs	ca180b7d2b9ef168
+0	4	0	clean	16945cb44e9643ab

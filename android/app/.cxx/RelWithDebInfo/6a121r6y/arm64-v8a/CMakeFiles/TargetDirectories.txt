@@ -1,0 +1,3 @@
+/Users/petermilligan/Dev/BrawApp2/android/app/.cxx/RelWithDebInfo/6a121r6y/arm64-v8a/CMakeFiles/appmodules.dir
+/Users/petermilligan/Dev/BrawApp2/android/app/.cxx/RelWithDebInfo/6a121r6y/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/petermilligan/Dev/BrawApp2/android/app/.cxx/RelWithDebInfo/6a121r6y/arm64-v8a/CMakeFiles/rebuild_cache.dir

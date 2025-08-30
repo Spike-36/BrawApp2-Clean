@@ -1,0 +1,48 @@
+diff --git a/node_modules/react-native-sound/index.js b/node_modules/react-native-sound/index.js
+index 3b2a8b0..9f3a6a4 100644
+--- a/node_modules/react-native-sound/index.js
++++ b/node_modules/react-native-sound/index.js
+@@ -1,12 +1,22 @@
+-import { NativeModules, Platform } from 'react-native'
+-const RNSound = NativeModules.RNSound
++import { NativeModules, Platform } from 'react-native'
++// Guard against null NativeModule under Hermes / early init
++const RNSound = (NativeModules && NativeModules.RNSound) ? NativeModules.RNSound : {}
++// Fallback platform flags if native constants are not available yet
++const __IS_ANDROID_FALLBACK__ = Platform.OS === 'android'
++const __IS_IOS_FALLBACK__ = Platform.OS === 'ios'
+ 
+ // ...
+ // the library reads platform flags from the native module; under Hermes this can be null
+-const IsAndroid = RNSound.IsAndroid
+-const IsIOS = RNSound.IsIOS
++const IsAndroid = (typeof RNSound.IsAndroid === 'boolean') ? RNSound.IsAndroid : __IS_ANDROID_FALLBACK__
++const IsIOS = (typeof RNSound.IsIOS === 'boolean') ? RNSound.IsIOS : __IS_IOS_FALLBACK__
+ 
+ // later the code uses RNSound.* directly; make those safe too
+-// e.g. RNSound.prepare(...)
++// e.g. RNSound.prepare(...)
++function __safeNativeCall__(fnName, ...args) {
++  const fn = RNSound && RNSound[fnName]
++  if (typeof fn !== 'function') {
++    console.warn('[react-native-sound] Native module not ready, skipped:', fnName)
++    return
++  }
++  return fn(...args)
++}
+ 
+ // replace direct calls with the safe wrapper where applicable
+ // (prepare, play, pause, stop, setCategory, enable, getCurrentTime, setNumberOfLoops, setPan, setSpeed, setVolume, release, setCategory, setActive, setSpeakerphoneOn, setCategoryIOS, enableInSilenceMode, etc.)
+@@ -120,7 +130,7 @@ Sound.prototype.prepare = function (...args) {
+   // before: RNSound.prepare(this._filename, ... , callback)
+-  return RNSound.prepare(this._filename, basePath, (key, error) => {
++  return __safeNativeCall__('prepare', this._filename, basePath, (key, error) => {
+     // existing callback body unchanged
+   })
+ }
+@@ -210,7 +220,7 @@ Sound.prototype.play = function (onEnd) {
+-  RNSound.play(this._key, (success) => {
++  __safeNativeCall__('play', this._key, (success) => {
+     // existing callback body unchanged
+   })
+ }
