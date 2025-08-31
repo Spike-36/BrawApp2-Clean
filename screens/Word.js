@@ -1,16 +1,18 @@
 // screens/Word.js
 import React, { useMemo, useRef, useEffect } from 'react';
-import { View, Text, FlatList, Dimensions, Pressable, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
 
 const { width } = Dimensions.get('window');
 
-export default function Word({ words, indexLang, index, setIndex }) {
+export default function Word({ words = [], indexLang = 'English', index = 0, setIndex }) {
   const listRef = useRef(null);
 
-  // keep list in sync with external index
   useEffect(() => {
     if (!listRef.current) return;
-    try { listRef.current.scrollToIndex({ index, animated: true }); } catch {}
+    try {
+      listRef.current.scrollToIndex({ index, animated: true });
+    } catch {}
   }, [index]);
 
   const getItemLayout = (_, i) => ({ length: width, offset: width * i, index: i });
@@ -23,70 +25,52 @@ export default function Word({ words, indexLang, index, setIndex }) {
   const viewabilityConfig = useMemo(() => ({ itemVisiblePercentThreshold: 60 }), []);
 
   const renderItem = ({ item }) => {
-    // core (Scots) head/meta
-    const head = item.scottish ?? '';
-    const phon = item.phonetic ?? '';
-    const ipa  = item.ipa ?? '';
-    const gram = item.grammarType ?? '';
+    const head = item?.scottish ?? '';
+    const phon = item?.phonetic ?? '';
+    const ipa = item?.ipa ?? '';
+    const gram = item?.grammarType ?? '';
 
-    // decide which block to show based on index language
     const isEnglish = indexLang === 'English';
+    const enMeaning = item?.meaning ?? '';
+    const enContext = item?.context ?? '';
+    const enInfo = item?.English_Info ?? '';
 
-    // English selection
-    const enMeaning = item.meaning ?? '';
-    const enContext = item.context ?? '';             // base context field
-    const enInfo    = item.English_Info ?? '';
-
-    // Foreign selection
-    const langKey        = indexLang || 'English';
+    const langKey = indexLang || 'English';
     const foreignMeaning = item?.[langKey] ?? '';
     const foreignContext = item?.[`${langKey}_Context`] ?? '';
-    const foreignInfo    = item?.[`${langKey}_Info`] ?? '';
+    const foreignInfo = item?.[`${langKey}_Info`] ?? '';
 
-    // Choose one set
-    const showLabel = isEnglish ? 'MEANING' : langKey.toUpperCase();
-    const primary   = isEnglish ? enMeaning : foreignMeaning;
-    const context   = isEnglish ? enContext : foreignContext;
-    const info      = isEnglish ? enInfo    : foreignInfo;
+    const primary = isEnglish ? enMeaning : foreignMeaning;
+    const context = isEnglish ? enContext : foreignContext;
+    const info = isEnglish ? enInfo : foreignInfo;
+
+    const hasMeta = !!(phon || ipa || gram);
 
     return (
       <View style={[styles.page, { width }]}>
         {/* Headword */}
-        <Text style={styles.term}>{head}</Text>
+        {!!head && <Text style={styles.term}>{head}</Text>}
 
-        {/* Meta */}
-        <View style={styles.meta}>
-          {!!phon && <Text style={styles.metaLine}>{phon}</Text>}
-          {!!ipa  && <Text style={styles.metaLine}>{ipa}</Text>}
-          {!!gram && <Text style={styles.metaLine}>{gram}</Text>}
-        </View>
+        {/* Meta block */}
+        {hasMeta && (
+          <View style={styles.meta}>
+            <View style={{ flexDirection: 'row', marginBottom: 4 }}>
+              {!!ipa && <Text style={styles.metaLineItalic}>{ipa}</Text>}
+              {!!gram && <Text style={[styles.metaLine, { marginLeft: 16 }]}>{gram}</Text>}
+            </View>
+            {!!phon && <Text style={styles.metaLineItalic}>{phon}</Text>}
+          </View>
+        )}
 
-        {/* Single block (English OR Foreign) */}
+        {hasMeta && <View style={styles.divider} />}
+
+        {/* Main block */}
         <View style={styles.block}>
-          {!!primary && <Text style={styles.label}>{showLabel}</Text>}
-          {!!primary && <Text style={styles.value}>{primary}</Text>}
-          {!!context && <Text style={[styles.value, styles.context]}>{context}</Text>}
+          {!!primary && <Text style={styles.meaning}>{primary}</Text>}
+          {!!context && <Text style={styles.context}>– {context}</Text>}
         </View>
 
-        {/* Prev / Next */}
-        <View style={styles.controls}>
-          <Pressable
-            onPress={() => setIndex((i) => Math.max(0, i - 1))}
-            style={[styles.navBtn, index === 0 && styles.navBtnDisabled]}
-            disabled={index === 0}
-          >
-            <Text style={styles.navTxt}>‹ Prev</Text>
-          </Pressable>
-          <Pressable
-            onPress={() => setIndex((i) => Math.min(words.length - 1, i + 1))}
-            style={[styles.navBtn, index === words.length - 1 && styles.navBtnDisabled]}
-            disabled={index === words.length - 1}
-          >
-            <Text style={styles.navTxt}>Next ›</Text>
-          </Pressable>
-        </View>
-
-        {/* Info (only the chosen language) */}
+        {/* Info */}
         {!!info && (
           <View style={styles.info}>
             <Text style={styles.infoTxt}>{info}</Text>
@@ -96,37 +80,119 @@ export default function Word({ words, indexLang, index, setIndex }) {
     );
   };
 
+  const count = Array.isArray(words) ? words.length : 0;
+  const atStart = index <= 0;
+  const atEnd = count === 0 || index >= count - 1;
+
+  const goPrev = () => {
+    if (atStart || !setIndex) return;
+    setIndex((i) => Math.max(0, i - 1));
+  };
+  const goNext = () => {
+    if (atEnd || !setIndex) return;
+    setIndex((i) => Math.min(count - 1, i + 1));
+  };
+
   return (
-    <FlatList
-      ref={listRef}
-      horizontal
-      pagingEnabled
-      showsHorizontalScrollIndicator={false}
-      data={words}
-      keyExtractor={(it, i) => String(it?.id ?? i)}
-      renderItem={renderItem}
-      initialScrollIndex={index}
-      getItemLayout={getItemLayout}
-      onViewableItemsChanged={onViewableItemsChanged}
-      viewabilityConfig={viewabilityConfig}
-      removeClippedSubviews
-    />
+    <View style={styles.container}>
+      <FlatList
+        ref={listRef}
+        horizontal
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+        data={words}
+        keyExtractor={(it, i) => String(it?.id ?? i)}
+        renderItem={renderItem}
+        initialScrollIndex={Math.min(index, Math.max(0, count - 1))}
+        getItemLayout={getItemLayout}
+        onViewableItemsChanged={onViewableItemsChanged}
+        viewabilityConfig={viewabilityConfig}
+        removeClippedSubviews
+        style={{ backgroundColor: '#FFFFFF' }}
+        contentContainerStyle={{ backgroundColor: '#FFFFFF' }}
+        onScrollToIndexFailed={() => {
+          requestAnimationFrame(() => {
+            try {
+              listRef.current?.scrollToIndex({ index: 0, animated: false });
+            } catch {}
+          });
+        }}
+      />
+
+      {/* Chevron overlay */}
+      <View style={styles.chevronsRow}>
+        <TouchableOpacity
+          onPress={goPrev}
+          disabled={atStart}
+          accessibilityLabel="Previous"
+          style={[styles.chevBtn, atStart && styles.chevDisabled]}
+          hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+        >
+          <Feather name="chevron-left" size={36} color={atStart ? '#BBBBBB' : '#111111'} />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={goNext}
+          disabled={atEnd}
+          accessibilityLabel="Next"
+          style={[styles.chevBtn, atEnd && styles.chevDisabled]}
+          hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+        >
+          <Feather name="chevron-right" size={36} color={atEnd ? '#BBBBBB' : '#111111'} />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  page:{ flex:1, alignItems:'center', justifyContent:'center', padding:24 },
-  term:{ fontSize:32, fontWeight:'800', marginBottom:6 },
-  meta:{ alignItems:'center', marginBottom:16 },
-  metaLine:{ fontSize:14, color:'#666' },
-  block:{ width:'100%', maxWidth:720, marginTop:8 },
-  label:{ fontSize:12, color:'#888', letterSpacing:0.5, marginBottom:4 },
-  value:{ fontSize:18, color:'#111' },
-  context:{ marginTop:4, color:'#444' },
-  controls:{ flexDirection:'row', gap:12, marginTop:24 },
-  navBtn:{ paddingHorizontal:16, paddingVertical:10, borderRadius:8, backgroundColor:'#111' },
-  navBtnDisabled:{ backgroundColor:'#aaa' },
-  navTxt:{ color:'#fff', fontWeight:'600' },
-  info:{ marginTop:20, paddingHorizontal:16, alignItems:'center' },
-  infoTxt:{ fontSize:13, color:'#555', textAlign:'center', marginTop:4 },
+  container: { flex: 1, backgroundColor: '#FFFFFF' },
+
+  page: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    paddingVertical: 24,
+    paddingHorizontal: 20,
+    backgroundColor: '#FFFFFF',
+  },
+
+  term: {
+    fontSize: 50,
+    color: '#111111',
+    fontWeight: '700',
+    fontFamily: 'Georgia',
+    textAlign: 'left',
+    marginBottom: 16,
+  },
+
+  meta: { alignItems: 'flex-start', marginBottom: 12 },
+  metaLine: { fontSize: 16, color: '#666666', textAlign: 'left' },
+  metaLineItalic: { fontSize: 16, color: '#666666', fontStyle: 'italic', textAlign: 'left' },
+
+  divider: { height: 2, backgroundColor: '#111111', width: '100%', marginVertical: 12 }, // bold line
+
+  block: { width: '100%', maxWidth: 720, marginTop: 8 },
+  meaning: { fontSize: 20, color: '#222222', fontWeight: '700', textAlign: 'left' }, 
+  context: { marginTop: 12, fontSize: 16, color: '#444444', fontStyle: 'italic', textAlign: 'left' },
+
+  info: { marginTop: 20, paddingRight: 16, alignItems: 'flex-start' },
+  infoTxt: { fontSize: 16, lineHeight: 24, color: '#555555', textAlign: 'left', marginTop: 4 },
+
+  chevronsRow: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 72,
+    paddingHorizontal: 24,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  chevBtn: {
+    backgroundColor: 'rgba(0,0,0,0.04)',
+    borderRadius: 999,
+    padding: 8,
+  },
+  chevDisabled: { opacity: 0.4 },
 });

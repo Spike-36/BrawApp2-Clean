@@ -4,7 +4,7 @@ import { SafeAreaView, View, StyleSheet, Text, Pressable } from 'react-native';
 import Home from './screens/Home';
 import List from './screens/List';
 import Word from './screens/Word';
-import Settings from './screens/Settings.js'; // <- button-list settings
+import Settings from './screens/Settings.js';
 import blocks from './data/blocks.json';
 
 function TabButton({ label, active, onPress }) {
@@ -15,14 +15,6 @@ function TabButton({ label, active, onPress }) {
   );
 }
 
-console.log('Check screens:', {
-  Home,
-  List,
-  Word,
-  Settings,
-});
-
-
 export default function App() {
   const [tab, setTab] = useState('Home');                // 'Home' | 'List' | 'Word' | 'Settings'
   const [indexLang, setIndexLang] = useState('English'); // must match blocks.json keys
@@ -30,6 +22,7 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
+      {/* Make the screen area stretch; no centering */}
       <View style={styles.content}>
         {tab === 'Home' && (
           <Home onStart={() => setTab('Word')} hasProgress={currentIndex > 0} />
@@ -69,7 +62,8 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container:{ flex:1, backgroundColor:'#fff' },
-  content:{ flex:1 },
+  // Critical: stretch + no centering
+  content:{ flex:1, alignItems:'stretch', justifyContent:'flex-start' },
   tabBar:{ flexDirection:'row', borderTopWidth:1, borderTopColor:'#ddd' },
   tabBtn:{ flex:1, padding:14, alignItems:'center' },
   tabBtnActive:{ backgroundColor:'#f5f5f5' },
