@@ -9,6 +9,7 @@ import Settings from './screens/Settings';
 
 import blocks from './data/blocks.json';
 import { t } from './i18n';
+import { PrefsProvider, usePrefs } from './context/PrefsContext';
 
 function TabButton({ label, active, onPress }) {
   return (
@@ -18,10 +19,9 @@ function TabButton({ label, active, onPress }) {
   );
 }
 
-export default function App() {
-  const [tab, setTab] = useState('Home');                // 'Home' | 'List' | 'Word' | 'Settings'
-  const [indexLang, setIndexLang] = useState('English'); // language label
-  const [currentIndex, setCurrentIndex] = useState(0);   // current word index
+function AppContent() {
+  const [tab, setTab] = useState('Home');
+  const { indexLang, setIndexLang, currentIndex, setCurrentIndex } = usePrefs();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -29,7 +29,7 @@ export default function App() {
         {tab === 'Home' && (
           <Home
             indexLang={indexLang}
-            onStart={() => setTab('Settings')}     // hero button → Settings (change language)
+            onStart={() => setTab('Settings')}
             hasProgress={currentIndex > 0}
           />
         )}
@@ -56,7 +56,7 @@ export default function App() {
         )}
       </View>
 
-      {/* Bottom nav bar */}
+      {/* Bottom nav */}
       <View style={styles.tabBar}>
         <TabButton label={t('home', indexLang)}     active={tab==='Home'}     onPress={() => setTab('Home')} />
         <TabButton label={t('list', indexLang)}     active={tab==='List'}     onPress={() => setTab('List')} />
@@ -64,6 +64,14 @@ export default function App() {
         <TabButton label={t('settings', indexLang)} active={tab==='Settings'} onPress={() => setTab('Settings')} />
       </View>
     </SafeAreaView>
+  );
+}
+
+export default function App() {
+  return (
+    <PrefsProvider>
+      <AppContent />
+    </PrefsProvider>
   );
 }
 

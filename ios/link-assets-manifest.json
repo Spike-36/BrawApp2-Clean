@@ -1,0 +1,17 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/EBGaramond-Bold.ttf",
+      "sha1": "630c223439a61a0d4310cc5e109f6bdb8420ce86"
+    },
+    {
+      "path": "assets/fonts/EBGaramond-Italic.ttf",
+      "sha1": "dd07d5d6b3294b95f04e601d01a2321eb9390b78"
+    },
+    {
+      "path": "assets/fonts/EBGaramond-Regular.ttf",
+      "sha1": "a42a80ba62a0290259a43ac0cb7bb4341e18b387"
+    }
+  ]
+}

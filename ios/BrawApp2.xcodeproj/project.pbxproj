@@ -8,7 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		6642F2183958420CA079B11F /* EBGaramond-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9D0A8A92585C4C73BE26F5A2 /* EBGaramond-Regular.ttf */; };
+		6E26DDA8490D439FA386C9E9 /* EBGaramond-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8DE4DA01DAF0463F8E960809 /* EBGaramond-Italic.ttf */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
+		7E953D3B84BB4F2CBBE51B10 /* EBGaramond-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 87C76690AFB94FBA9D3AE16C /* EBGaramond-Bold.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		BB0761AE3FF3AD405E6939A5 /* libPods-BrawApp2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4EC908AC93790FE40801D82E /* libPods-BrawApp2.a */; };
 		F7B50556595A23CB3DA29DB0 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
@@ -22,6 +25,9 @@
 		4EC908AC93790FE40801D82E /* libPods-BrawApp2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BrawApp2.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = BrawApp2/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BrawApp2/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		87C76690AFB94FBA9D3AE16C /* EBGaramond-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "EBGaramond-Bold.ttf"; path = "../assets/fonts/EBGaramond-Bold.ttf"; sourceTree = "<group>"; };
+		8DE4DA01DAF0463F8E960809 /* EBGaramond-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "EBGaramond-Italic.ttf"; path = "../assets/fonts/EBGaramond-Italic.ttf"; sourceTree = "<group>"; };
+		9D0A8A92585C4C73BE26F5A2 /* EBGaramond-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "EBGaramond-Regular.ttf"; path = "../assets/fonts/EBGaramond-Regular.ttf"; sourceTree = "<group>"; };
 		9F7FCA9BBC69BE3E34C7D84F /* Pods-BrawApp2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrawApp2.release.xcconfig"; path = "Target Support Files/Pods-BrawApp2/Pods-BrawApp2.release.xcconfig"; sourceTree = "<group>"; };
 		A2BDB81FEFD0D9E9C195532C /* Pods-BrawApp2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrawApp2.debug.xcconfig"; path = "Target Support Files/Pods-BrawApp2/Pods-BrawApp2.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -60,6 +66,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		45FA70870C464A7F86FE276A /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				87C76690AFB94FBA9D3AE16C /* EBGaramond-Bold.ttf */,
+				8DE4DA01DAF0463F8E960809 /* EBGaramond-Italic.ttf */,
+				9D0A8A92585C4C73BE26F5A2 /* EBGaramond-Regular.ttf */,
+			);
+			name = Resources;
+			path = "";
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -75,6 +92,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				45FA70870C464A7F86FE276A /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -161,6 +179,9 @@
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				F7B50556595A23CB3DA29DB0 /* PrivacyInfo.xcprivacy in Resources */,
+				7E953D3B84BB4F2CBBE51B10 /* EBGaramond-Bold.ttf in Resources */,
+				6E26DDA8490D439FA386C9E9 /* EBGaramond-Italic.ttf in Resources */,
+				6642F2183958420CA079B11F /* EBGaramond-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

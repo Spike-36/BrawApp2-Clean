@@ -1,6 +1,6 @@
 // screens/Word.js
 import React, { useMemo, useRef, useEffect } from 'react';
-import { View, Text, FlatList, Dimensions, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Dimensions, TouchableOpacity, StyleSheet, Platform } from 'react-native';
 import Feather from 'react-native-vector-icons/Feather';
 
 const { width } = Dimensions.get('window');
@@ -28,8 +28,7 @@ export default function Word({ words = [], indexLang = 'English', index = 0, set
     const head = item?.scottish ?? '';
     const phon = item?.phonetic ?? '';
     const ipa  = item?.ipa ?? '';
-    const rawGram = item?.grammarType ?? '';
-    const gram = rawGram || ''; // ← use raw value directly
+    const gram = item?.grammarType ?? '';
 
     const isEnglish = indexLang === 'English';
     const enMeaning = item?.meaning ?? '';
@@ -49,10 +48,8 @@ export default function Word({ words = [], indexLang = 'English', index = 0, set
 
     return (
       <View style={[styles.page, { width }]}>
-        {/* Headword */}
         {!!head && <Text style={styles.term}>{head}</Text>}
 
-        {/* Meta block */}
         {hasMeta && (
           <View style={styles.meta}>
             <View style={{ flexDirection: 'row', marginBottom: 4 }}>
@@ -65,13 +62,11 @@ export default function Word({ words = [], indexLang = 'English', index = 0, set
 
         {hasMeta && <View style={styles.divider} />}
 
-        {/* Main block */}
         <View style={styles.block}>
           {!!primary && <Text style={styles.meaning}>{primary}</Text>}
           {!!context && <Text style={styles.context}>– {context}</Text>}
         </View>
 
-        {/* Info */}
         {!!info && (
           <View style={styles.info}>
             <Text style={styles.infoTxt}>{info}</Text>
@@ -85,14 +80,8 @@ export default function Word({ words = [], indexLang = 'English', index = 0, set
   const atStart = index <= 0;
   const atEnd = count === 0 || index >= count - 1;
 
-  const goPrev = () => {
-    if (atStart || !setIndex) return;
-    setIndex((i) => Math.max(0, i - 1));
-  };
-  const goNext = () => {
-    if (atEnd || !setIndex) return;
-    setIndex((i) => Math.min(count - 1, i + 1));
-  };
+  const goPrev = () => !atStart && setIndex?.((i) => Math.max(0, i - 1));
+  const goNext = () => !atEnd   && setIndex?.((i) => Math.min(count - 1, i + 1));
 
   return (
     <View style={styles.container}>
@@ -154,17 +143,20 @@ const styles = StyleSheet.create({
   term: {
     fontSize: 50,
     color: '#111111',
-    fontWeight: '700',
     textAlign: 'left',
     marginBottom: 16,
-    fontFamily: 'Georgia', // Scottish headword in Georgia
+    // Always Garamond Bold
+    fontFamily: Platform.select({
+      ios: 'EB Garamond Bold',
+      android: 'EBGaramond-Bold',
+    }),
   },
 
   meta: { alignItems: 'flex-start', marginBottom: 12 },
   metaLine: { fontSize: 16, color: '#666666', textAlign: 'left' },
   metaLineItalic: { fontSize: 16, color: '#666666', fontStyle: 'italic', textAlign: 'left' },
 
-  divider: { height: 2, backgroundColor: '#111111', width: '100%', marginVertical: 12 }, // bold
+  divider: { height: 2, backgroundColor: '#111111', width: '100%', marginVertical: 12 },
 
   block: { width: '100%', maxWidth: 720, marginTop: 8 },
   meaning: { fontSize: 20, color: '#222222', fontWeight: '700', textAlign: 'left' },
