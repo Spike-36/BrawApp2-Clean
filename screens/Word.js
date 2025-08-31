@@ -27,22 +27,23 @@ export default function Word({ words = [], indexLang = 'English', index = 0, set
   const renderItem = ({ item }) => {
     const head = item?.scottish ?? '';
     const phon = item?.phonetic ?? '';
-    const ipa = item?.ipa ?? '';
-    const gram = item?.grammarType ?? '';
+    const ipa  = item?.ipa ?? '';
+    const rawGram = item?.grammarType ?? '';
+    const gram = rawGram || ''; // ← use raw value directly
 
     const isEnglish = indexLang === 'English';
     const enMeaning = item?.meaning ?? '';
     const enContext = item?.context ?? '';
-    const enInfo = item?.English_Info ?? '';
+    const enInfo    = item?.English_Info ?? '';
 
-    const langKey = indexLang || 'English';
+    const langKey        = indexLang || 'English';
     const foreignMeaning = item?.[langKey] ?? '';
     const foreignContext = item?.[`${langKey}_Context`] ?? '';
-    const foreignInfo = item?.[`${langKey}_Info`] ?? '';
+    const foreignInfo    = item?.[`${langKey}_Info`] ?? '';
 
     const primary = isEnglish ? enMeaning : foreignMeaning;
     const context = isEnglish ? enContext : foreignContext;
-    const info = isEnglish ? enInfo : foreignInfo;
+    const info    = isEnglish ? enInfo    : foreignInfo;
 
     const hasMeta = !!(phon || ipa || gram);
 
@@ -110,13 +111,6 @@ export default function Word({ words = [], indexLang = 'English', index = 0, set
         removeClippedSubviews
         style={{ backgroundColor: '#FFFFFF' }}
         contentContainerStyle={{ backgroundColor: '#FFFFFF' }}
-        onScrollToIndexFailed={() => {
-          requestAnimationFrame(() => {
-            try {
-              listRef.current?.scrollToIndex({ index: 0, animated: false });
-            } catch {}
-          });
-        }}
       />
 
       {/* Chevron overlay */}
@@ -161,19 +155,19 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: '#111111',
     fontWeight: '700',
-    fontFamily: 'Georgia',
     textAlign: 'left',
     marginBottom: 16,
+    fontFamily: 'Georgia', // Scottish headword in Georgia
   },
 
   meta: { alignItems: 'flex-start', marginBottom: 12 },
   metaLine: { fontSize: 16, color: '#666666', textAlign: 'left' },
   metaLineItalic: { fontSize: 16, color: '#666666', fontStyle: 'italic', textAlign: 'left' },
 
-  divider: { height: 2, backgroundColor: '#111111', width: '100%', marginVertical: 12 }, // bold line
+  divider: { height: 2, backgroundColor: '#111111', width: '100%', marginVertical: 12 }, // bold
 
   block: { width: '100%', maxWidth: 720, marginTop: 8 },
-  meaning: { fontSize: 20, color: '#222222', fontWeight: '700', textAlign: 'left' }, 
+  meaning: { fontSize: 20, color: '#222222', fontWeight: '700', textAlign: 'left' },
   context: { marginTop: 12, fontSize: 16, color: '#444444', fontStyle: 'italic', textAlign: 'left' },
 
   info: { marginTop: 20, paddingRight: 16, alignItems: 'flex-start' },

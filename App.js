@@ -1,11 +1,14 @@
 // App.js
 import React, { useState } from 'react';
 import { SafeAreaView, View, StyleSheet, Text, Pressable } from 'react-native';
+
 import Home from './screens/Home';
 import List from './screens/List';
 import Word from './screens/Word';
-import Settings from './screens/Settings.js';
+import Settings from './screens/Settings';
+
 import blocks from './data/blocks.json';
+import { t } from './i18n';
 
 function TabButton({ label, active, onPress }) {
   return (
@@ -17,15 +20,18 @@ function TabButton({ label, active, onPress }) {
 
 export default function App() {
   const [tab, setTab] = useState('Home');                // 'Home' | 'List' | 'Word' | 'Settings'
-  const [indexLang, setIndexLang] = useState('English'); // must match blocks.json keys
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [indexLang, setIndexLang] = useState('English'); // language label
+  const [currentIndex, setCurrentIndex] = useState(0);   // current word index
 
   return (
     <SafeAreaView style={styles.container}>
-      {/* Make the screen area stretch; no centering */}
       <View style={styles.content}>
         {tab === 'Home' && (
-          <Home onStart={() => setTab('Word')} hasProgress={currentIndex > 0} />
+          <Home
+            indexLang={indexLang}
+            onStart={() => setTab('Settings')}     // hero button → Settings (change language)
+            hasProgress={currentIndex > 0}
+          />
         )}
 
         {tab === 'List' && (
@@ -50,11 +56,12 @@ export default function App() {
         )}
       </View>
 
+      {/* Bottom nav bar */}
       <View style={styles.tabBar}>
-        <TabButton label="Home"     active={tab==='Home'}     onPress={() => setTab('Home')} />
-        <TabButton label="List"     active={tab==='List'}     onPress={() => setTab('List')} />
-        <TabButton label="Word"     active={tab==='Word'}     onPress={() => setTab('Word')} />
-        <TabButton label="Settings" active={tab==='Settings'} onPress={() => setTab('Settings')} />
+        <TabButton label={t('home', indexLang)}     active={tab==='Home'}     onPress={() => setTab('Home')} />
+        <TabButton label={t('list', indexLang)}     active={tab==='List'}     onPress={() => setTab('List')} />
+        <TabButton label={t('words', indexLang)}    active={tab==='Word'}     onPress={() => setTab('Word')} />
+        <TabButton label={t('settings', indexLang)} active={tab==='Settings'} onPress={() => setTab('Settings')} />
       </View>
     </SafeAreaView>
   );
@@ -62,8 +69,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container:{ flex:1, backgroundColor:'#fff' },
-  // Critical: stretch + no centering
-  content:{ flex:1, alignItems:'stretch', justifyContent:'flex-start' },
+  content:{ flex:1 },
   tabBar:{ flexDirection:'row', borderTopWidth:1, borderTopColor:'#ddd' },
   tabBtn:{ flex:1, padding:14, alignItems:'center' },
   tabBtnActive:{ backgroundColor:'#f5f5f5' },

@@ -1,6 +1,7 @@
 // screens/Settings.js
 import React from 'react';
 import { SafeAreaView, StyleSheet, Text, View, Pressable } from 'react-native';
+import { t } from '../i18n';
 
 const LANG_OPTIONS = [
   { value: 'English',  label: 'English' },
@@ -17,7 +18,8 @@ export default function Settings({ indexLang, setIndexLang }) {
     <SafeAreaView style={styles.safe}>
       <View style={styles.container}>
         <Text style={styles.heading}>Settings</Text>
-        <Text style={styles.label}>Index Language</Text>
+        {/* Only this line changed: use i18n key 'language' */}
+        <Text style={styles.label}>{t('language', indexLang)}</Text>
 
         {LANG_OPTIONS.map((opt) => (
           <Pressable

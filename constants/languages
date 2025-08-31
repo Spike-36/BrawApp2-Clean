@@ -1,0 +1,11 @@
+export const CODE_MAP = {
+  English: 'en',
+  French:  'fr',
+  Spanish: 'es',
+  German:  'de',
+  Arabic:  'ar',
+  Japanese:'ja',
+  Korean:  'ko',
+  Italian: 'it',
+  Chinese: 'zh',
+};
