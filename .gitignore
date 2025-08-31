@@ -15,3 +15,8 @@ yarn-error.log*
 vendor/
 .bundle/
 *.xcuserstate
+android/app/build/
+android/build/
+*.apk
+*.aab
+*.so
