@@ -1,6 +1,8 @@
 // screens/Home.js
-import { ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
+import React, { useRef } from 'react';
+import { Image, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Sound from 'react-native-sound';
 import { isRTL as rtlCheck, t } from '../i18n';
 
 const BLUE = '#016FCC';
@@ -8,10 +10,55 @@ const CARD_WIDTH = '86%';
 const HERO_TOP_SPACING = 150;
 const BUTTON_WIDTH = '72%';
 const BUTTON_RADIUS = 28;
-const OVERLAY_ALPHA = 0.25; // adjust this to change filter strength
+const OVERLAY_ALPHA = 0.75; // adjust opacity here (0..1)
+
+// 🔊 TEMP probe asset (bundled). Use any existing short mp3 in your repo.
+const PROBE_ASSET = require('../assets/audio/Z003.mp3');
 
 export default function Home({ onStart, hasProgress, indexLang = 'English' }) {
   const isRTL = rtlCheck(indexLang);
+
+  // ---- TEMP audio probe (isolated) ----
+  const soundRef = useRef(null);
+  const categorySetRef = useRef(false);
+
+  const stopProbe = () => {
+    const s = soundRef.current;
+    if (s) {
+      try {
+        s.stop(() => {
+          try { s.release(); } catch {}
+        });
+      } catch {}
+    }
+    soundRef.current = null;
+  };
+
+  const playProbe = () => {
+    // iOS: play through mute switch; Android ignores (fine).
+    if (!categorySetRef.current) {
+      try { Sound.setCategory('Playback', true); } catch {}
+      categorySetRef.current = true;
+    }
+
+    // ensure one-at-a-time
+    stopProbe();
+
+    // IMPORTANT: pass Metro asset ID (number) from require(...)
+    const s = new Sound(PROBE_ASSET, (err) => {
+      if (err) {
+        console.warn('Audio probe load error:', err);
+        return;
+      }
+      soundRef.current = s;
+      s.play((success) => {
+        try { s.release(); } catch {}
+        if (soundRef.current === s) soundRef.current = null;
+        if (!success) console.warn('Audio probe playback failed (stopped?)');
+      });
+    });
+  };
+  // ---- /TEMP audio probe ----
 
   return (
     <ImageBackground
@@ -21,12 +68,19 @@ export default function Home({ onStart, hasProgress, indexLang = 'English' }) {
     >
       <View style={styles.overlay} />
 
-      <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
+      {/* only respect bottom inset, not top */}
+      <SafeAreaView style={styles.safe} edges={['bottom']}>
         {/* HERO PANEL */}
         <View style={styles.heroWrap}>
           <View style={styles.heroCard}>
-            <Text style={styles.heroTitle}>Braw!</Text>
-            <Text style={styles.heroSubtitle}>{t('scotspeak', indexLang)}</Text>
+            <Image
+              source={require('../assets/images/brawHeading.png')}
+              accessibilityLabel="Braw"
+              style={styles.logo}
+            />
+            <Text style={[styles.heroSubtitle, isRTL && { writingDirection: 'rtl', textAlign: 'center' }]}>
+              {t('scotspeak', indexLang)}
+            </Text>
           </View>
         </View>
 
@@ -57,6 +111,15 @@ export default function Home({ onStart, hasProgress, indexLang = 'English' }) {
               {t('audio', indexLang)}
             </Text>
           </Pressable>
+
+          {/* 🔊 TEMP: Probe button (plays Z003) */}
+          <Pressable
+            style={[styles.btn, styles.btnProbe]}
+            onPress={playProbe}
+            accessibilityLabel="Probe audio playback"
+          >
+            <Text style={styles.btnProbeText}>▶ Probe (Z003)</Text>
+          </Pressable>
         </View>
       </SafeAreaView>
     </ImageBackground>
@@ -66,45 +129,56 @@ export default function Home({ onStart, hasProgress, indexLang = 'English' }) {
 const styles = StyleSheet.create({
   bg: { flex: 1 },
   safe: { flex: 1, backgroundColor: 'transparent' },
+
+  // 🔵 Blue transparency overlay (#0065bd with adjustable alpha)
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: `rgba(0,0,0,${OVERLAY_ALPHA})`, // 🔹 adjustable dark filter
+    backgroundColor: `rgba(0, 101, 189, ${OVERLAY_ALPHA})`,
   },
+
   heroWrap: {
     alignItems: 'center',
     marginTop: HERO_TOP_SPACING,
   },
+
+  // Transparent container: no white box/shadow
   heroCard: {
     width: CARD_WIDTH,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    paddingVertical: 32,
-    paddingHorizontal: 24,
+    backgroundColor: 'transparent',
+    borderRadius: 0,
+    paddingVertical: 0,
+    paddingHorizontal: 0,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.25,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 6 },
-    elevation: 6,
+    shadowColor: 'transparent',
+    shadowOpacity: 0,
+    shadowRadius: 0,
+    elevation: 0,
   },
-  heroTitle: {
-    color: BLUE,
-    fontSize: 54,
-    lineHeight: 56,
-    fontFamily: 'Georgia',
+
+  // Bigger logo (keep ~2.5:1 ratio → 300x120)
+  logo: {
+    width: 300,
+    height: 120,
+    resizeMode: 'contain',
+    marginBottom: 6,
   },
+
+  // Standard app text in #ffbd59
   heroSubtitle: {
-    color: BLUE,
-    marginTop: 12,
-    fontSize: 26,
-    letterSpacing: 3,
+    color: '#ffbd59',
+    marginTop: 8,
+    fontSize: 30,
+    letterSpacing: 1,
     fontWeight: '600',
+    textAlign: 'center',
   },
+
   buttons: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
+
   btn: {
     width: BUTTON_WIDTH,
     paddingVertical: 14,
@@ -112,15 +186,31 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btnSpacing: { marginBottom: 48 },
-  btnPrimary: { 
+
+  btnPrimary: {
     backgroundColor: 'rgba(0, 51, 102, 0.75)',
-    borderWidth: 1,         // 🔹 thin white border
-    borderColor: '#FFFFFF', // 🔹 white outline
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
   },
+
   btnText: {
     color: '#EAF2FF',
     fontSize: 20,
     letterSpacing: 2,
     fontWeight: '700',
+  },
+
+  // TEMP probe button styling
+  btnProbe: {
+    marginTop: 16,
+    backgroundColor: '#444',
+    borderWidth: 1,
+    borderColor: '#FFFFFF',
+  },
+  btnProbeText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
+    letterSpacing: 1,
   },
 });
