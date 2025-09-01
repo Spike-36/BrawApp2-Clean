@@ -25,9 +25,9 @@
 		4EC908AC93790FE40801D82E /* libPods-BrawApp2.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BrawApp2.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = BrawApp2/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = BrawApp2/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		87C76690AFB94FBA9D3AE16C /* EBGaramond-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "EBGaramond-Bold.ttf"; path = "../assets/fonts/EBGaramond-Bold.ttf"; sourceTree = "<group>"; };
-		8DE4DA01DAF0463F8E960809 /* EBGaramond-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "EBGaramond-Italic.ttf"; path = "../assets/fonts/EBGaramond-Italic.ttf"; sourceTree = "<group>"; };
-		9D0A8A92585C4C73BE26F5A2 /* EBGaramond-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "EBGaramond-Regular.ttf"; path = "../assets/fonts/EBGaramond-Regular.ttf"; sourceTree = "<group>"; };
+		87C76690AFB94FBA9D3AE16C /* EBGaramond-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "EBGaramond-Bold.ttf"; path = "../assets/fonts/EBGaramond-Bold.ttf"; sourceTree = "<group>"; };
+		8DE4DA01DAF0463F8E960809 /* EBGaramond-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "EBGaramond-Italic.ttf"; path = "../assets/fonts/EBGaramond-Italic.ttf"; sourceTree = "<group>"; };
+		9D0A8A92585C4C73BE26F5A2 /* EBGaramond-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "EBGaramond-Regular.ttf"; path = "../assets/fonts/EBGaramond-Regular.ttf"; sourceTree = "<group>"; };
 		9F7FCA9BBC69BE3E34C7D84F /* Pods-BrawApp2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrawApp2.release.xcconfig"; path = "Target Support Files/Pods-BrawApp2/Pods-BrawApp2.release.xcconfig"; sourceTree = "<group>"; };
 		A2BDB81FEFD0D9E9C195532C /* Pods-BrawApp2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BrawApp2.debug.xcconfig"; path = "Target Support Files/Pods-BrawApp2/Pods-BrawApp2.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -74,7 +74,6 @@
 				9D0A8A92585C4C73BE26F5A2 /* EBGaramond-Regular.ttf */,
 			);
 			name = Resources;
-			path = "";
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -280,7 +279,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = HARLRJ9283;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = BrawApp2/Info.plist;
@@ -309,7 +308,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 12;
 				"CURRENT_PROJECT_VERSION[sdk=*]" = 1;
 				DEVELOPMENT_TEAM = HARLRJ9283;
 				INFOPLIST_FILE = BrawApp2/Info.plist;
